@@ -11,6 +11,7 @@ formEl.innerHTML = `
 <input type="text" class="form mb-2 mr-sm-2" data-id="url" >
 <input type="text" class="form mb-2 mr-sm-2" data-id="text">
 <select class="custom-select" data-id="type">
+<option value="regular">Обычный</option>
 <option value="image">Изображение</option>
 <option value="audio">Аудио</option>
 <option value="video">Видео</option>
@@ -35,7 +36,7 @@ formEl.addEventListener('submit', function (ev) {
         type,
     };
     posts.push(post);
-    typeEl.value = 'image';
+    typeEl.value = 'regular';
     // rebuildList(postsEl, posts);
     urlEl.value = '';
     textEl.value = '';
@@ -82,7 +83,15 @@ function rebuildList(containerEl, items) {
             <button type="button" class="btn btn-primary btn-sm" data-action="like">like</button>
             <button type="button" class="btn btn-primary btn-sm" data-action="dislike">dislike</button>
             `
-        };
+        } else if(item.type === 'regular') {
+            el.innerHTML = `
+            <div class="rounded">${item.url}</div>
+            ${item.text} 
+            <span class="badge badge-secondary">${item.likes}</span>
+            <button type="button" class="btn btn-primary btn-sm" data-action="like">like</button>
+            <button type="button" class="btn btn-primary btn-sm" data-action="dislike">dislike</button>
+            `
+        }
 
         el.querySelector('[data-action=like]').addEventListener('click', function (event) {
             item.likes++;
